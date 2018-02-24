@@ -41,7 +41,7 @@ namespace VECTOR {
     return Vector(x - b.x, y - b.y, z - b.z);
   }
 
-  // reverse sign of Vector
+  // negate Vector
   Vector Vector::operator-() const {
     return Vector(-x, -y, -z);
   }
