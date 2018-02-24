@@ -4,12 +4,50 @@
 
 using namespace std;
 
+// First approach : Using custom code
 unsigned int FindFunctionDefn(const char* strFunctionName, const char* strSourceCode) {
+  unsigned int line = 1;
+  int i = 0, j = 0, sourceCodeLen = strlen(strSourceCode), functionNameLen = strlen(strFunctionName);
+
+  while (i<sourceCodeLen) {
+    if (strSourceCode[i] == '\\' && strSourceCode[i+1] == 'n')                  // Check new line
+      line++;
+    while (strFunctionName[j] == strSourceCode[i] && j < functionNameLen) {     // Match strFunctionName
+      j++;
+      i++;
+    }
+    if (j == functionNameLen) {                                                 // If all characters matched
+      while (strSourceCode[i] == ' ' && i<sourceCodeLen)                        // Check for spaces
+        i++;
+      if (strSourceCode[i] == '(') {                                            // Check for (
+        while (strSourceCode[i] != ')' && i<sourceCodeLen)                      // Check for arguments or spaces
+          i++;
+        if (i != sourceCodeLen-1) {
+          i++;
+          while (strSourceCode[i] == ' ' && i<sourceCodeLen)                    // Check for spaces
+            i++;
+          if (strSourceCode[i] == '{')
+            return line;
+        }
+      }
+      i--;
+      j = 0;
+    } else {                                                                    // If all characters not matched
+      j = 0;
+      i++;
+    }
+  }
+  return 0;
+}
+
+
+// Second approach : Using Regular expression for better flexiblity and performance in case of large source code
+unsigned int FindFunctionDefnReg(const char* strFunctionName, const char* strSourceCode) {
   string funName(strFunctionName);
   funName = "("+funName+"\\s*\\([\\w, ]*\\)\\s*\\{)";                           // Regular expression
   regex r(funName);
 
-  unsigned int line = 1, i = 0, sourceCodeLen = strlen(strSourceCode);
+  int line = 1, i = 0, sourceCodeLen = strlen(strSourceCode);
 
   while (i < sourceCodeLen) {
     char tmp[sourceCodeLen];                                                    // Store each line
