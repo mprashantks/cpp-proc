@@ -9,7 +9,7 @@ unsigned int FindFunctionDefn(const char* strFunctionName, const char* strSource
   funName = "("+funName+"\\s*\\([\\w, ]*\\)\\s*\\{)";                           // Regular expression
   regex r(funName);
 
-  int line = 1, i = 0, sourceCodeLen = strlen(strSourceCode);
+  unsigned int line = 1, i = 0, sourceCodeLen = strlen(strSourceCode);
 
   while (i < sourceCodeLen) {
     char tmp[sourceCodeLen];                                                    // Store each line
@@ -30,7 +30,7 @@ unsigned int FindFunctionDefn(const char* strFunctionName, const char* strSource
 
 int main() {
   char strFunctionName[] = "func2";
-  char strSourceCode[] = "int func2s(){ return 0; }\\n\\n\\n\\nint func2()      {}\n\nint fun()";
+  char strSourceCode[] = "int func1(){ return 0; }\\n int func2(){ return 1; }\\n" "int main(int argc, char*argv[]){ return func2(); }\\n";
   cout << FindFunctionDefn( strFunctionName, strSourceCode ) << endl;
   return 0;
 }
