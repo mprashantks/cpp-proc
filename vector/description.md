@@ -13,5 +13,7 @@
 9. Cross product of vectors
 
 ## Design choice
-Here, the program is built on top of principles of OOPs and operator overloading.
+1. Program is built on top of principles of OOPs and operator overloading.
+2. Objects are passed as reference to save time and space.
+3. Friend functions are employed to enforce commutative property and understandable programming logic.
 For more details refer code.
