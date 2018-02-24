@@ -1,3 +1,5 @@
+// Compile with vect.cpp file
+
 #include <iostream>
 #include "vect.h"
 
