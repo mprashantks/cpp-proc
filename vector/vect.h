@@ -2,8 +2,6 @@
 #define VECTOR_H_
 
 #include <iostream>
-#include <cmath>
-using std::sqrt;
 
 // Create custom namespace for better management in case of large project
 namespace VECTOR {
